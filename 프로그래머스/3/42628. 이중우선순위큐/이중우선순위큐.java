@@ -1,31 +1,36 @@
 import java.util.*;
 
 class Solution {
+    private class Number{
+        int num;
+        public Number(int num){
+            this.num = num;
+        }
+    }
     public int[] solution(String[] operations) {
-        int[] answer = new int[2];
-        
-        PriorityQueue<Integer> minQ = new PriorityQueue<>();
-        PriorityQueue<Integer> maxQ = new PriorityQueue<>(Collections.reverseOrder());
-        
-        StringTokenizer st;
-        for(int i=0;i<operations.length;++i) {
-            st = new StringTokenizer(operations[i]," ");
-            char order = st.nextToken().charAt(0);
-            int n = Integer.parseInt(st.nextToken());
-            
-            if(order == 'I'){
-                minQ.add(n);
-                maxQ.add(n);
-            } else {
-                if(!maxQ.isEmpty())
-                    if(n == 1) minQ.remove(maxQ.poll());
-                    else maxQ.remove(minQ.poll());  
+        TreeSet<Number> set = new TreeSet<>((o1,o2)->{
+            return o1.num-o2.num;
+        });
+        String[] order;
+        int n;
+        for(int i=0; i<operations.length; ++i) {
+            order = operations[i].split(" ");
+            n = Integer.parseInt(order[1]);
+            if(order[0].equals("I"))
+                set.add(new Number(n));
+            else{
+                if(!set.isEmpty()){
+                    if(n==1) set.pollLast();
+                    else set.pollFirst();
+                }
             }
         }
+
         
-        if(!maxQ.isEmpty()) {
-            answer[0] = maxQ.peek();
-            answer[1] = minQ.peek();
+        int[] answer = new int[2];
+        if(!set.isEmpty()){
+            answer[0] = set.last().num;
+            answer[1] = set.first().num;
         }
 
 	    return answer;
