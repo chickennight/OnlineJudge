@@ -1,4 +1,3 @@
--- 코드를 입력하세요
 SELECT ORDER_ID,
     PRODUCT_ID,
     DATE_FORMAT(OUT_DATE, '%Y-%m-%d') AS OUT_DATE,
