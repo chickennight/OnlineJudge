@@ -1,38 +1,35 @@
 import java.util.*;
 
 class Solution {
-    private class Number{
-        int num;
-        public Number(int num){
-            this.num = num;
+    public int[] solution(String[] operations) {
+        TreeMap<Integer,Integer> map = new TreeMap<>();
+        for(String order: operations){
+            query(order, map);
+        }
+        if(map.size()==0) return new int[]{0,0};
+        else{
+            return new int[]{map.lastKey(),map.firstKey()};
         }
     }
-    public int[] solution(String[] operations) {
-        TreeSet<Number> set = new TreeSet<>((o1,o2)->{
-            return o1.num-o2.num;
-        });
-        String[] order;
-        int n;
-        for(int i=0; i<operations.length; ++i) {
-            order = operations[i].split(" ");
-            n = Integer.parseInt(order[1]);
-            if(order[0].equals("I"))
-                set.add(new Number(n));
-            else{
-                if(!set.isEmpty()){
-                    if(n==1) set.pollLast();
-                    else set.pollFirst();
-                }
+    
+    private void query(String order, TreeMap<Integer,Integer> map){
+        String[] input = order.split(" ");
+        String id = input[0];
+        int value = Integer.parseInt(input[1]);
+        if(id.equals("I")){
+            map.put(value,map.getOrDefault(value,0)+1);
+        }else {
+            if(map.size()==0) return;
+            if(value==1){
+                int cnt = map.get(map.lastKey());
+                if(cnt == 1) map.remove(map.lastKey());
+                else map.put(map.lastKey(),cnt-1);
+            }else{
+                int cnt = map.get(map.firstKey());
+                if(cnt == 1) map.remove(map.firstKey());
+                else map.put(map.firstKey(),cnt-1);
             }
         }
 
-        
-        int[] answer = new int[2];
-        if(!set.isEmpty()){
-            answer[0] = set.last().num;
-            answer[1] = set.first().num;
-        }
-
-	    return answer;
     }
 }
