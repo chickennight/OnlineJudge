@@ -1,16 +1,16 @@
 import java.util.*;
 class Solution {
     boolean solution(String s) {
-        Stack<Character> stack = new Stack<>();
+        int cnt = 0;
         for(int i=0; i<s.length(); ++i){
             char c = s.charAt(i);
-            if(c == '(') stack.push(c);
+            if(c == '(') cnt++;
             else{
-                if(!stack.isEmpty()) stack.pop();
+                if(cnt > 0) cnt--;
                 else return false;
             }
         }
 
-        return stack.isEmpty();
+        return cnt == 0;
     }
 }
