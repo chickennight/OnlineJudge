@@ -16,7 +16,7 @@ class Solution {
         int n;
         for(String tuple : str){
             String[] numString = tuple.split(",");
-            for(int i = 0 ; i<numString.length; ++i){
+            for(int i = 0; i<numString.length; ++i){
                 n = Integer.parseInt(numString[i]);
                 if(!set.contains(n)){
                     set.add(n);
