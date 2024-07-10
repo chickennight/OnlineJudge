@@ -1,3 +1,4 @@
+//오픈채팅방
 import java.util.*;
 class Solution {
     private List<String> answer;
@@ -16,19 +17,17 @@ class Solution {
     
     private void inputUser(String order){
         String[] orders = order.split(" ");
-        if(orders[0].equals("Enter")){
+        if(orders[0].equals("Enter"))
             map.put(orders[1],orders[2]);
-        } else if(orders[0].equals("Change")){
+        else if(orders[0].equals("Change"))
             map.put(orders[1],orders[2]);
-        }
     }
     
     private void generateMessage(String order){
         String[] orders = order.split(" ");
-        if(orders[0].equals("Enter")){
+        if(orders[0].equals("Enter"))
             answer.add(map.get(orders[1])+"님이 들어왔습니다.");
-        }else if(orders[0].equals("Leave")){
+        else if(orders[0].equals("Leave"))
             answer.add(map.get(orders[1])+"님이 나갔습니다.");
-        }
     }
 }
