@@ -5,7 +5,7 @@ class Solution {
         String answer = "(None)";
         m = func(m);
         int max = 0;
-        for(String musicinfo: musicinfos) {
+        for(String musicinfo: musicinfos){
             StringBuilder sb = new StringBuilder();
             String[] str = musicinfo.split(",");
             StringTokenizer st = new StringTokenizer(str[1], ":");
@@ -30,12 +30,6 @@ class Solution {
     }
     
     String func(String note) {
-        note = note.replace("A#", "a");
-        note = note.replace("B#", "b");
-        note = note.replace("C#", "c");
-        note = note.replace("D#", "d");
-        note = note.replace("F#", "f");
-        note = note.replace("G#", "g");
-        return note;
+        return note.replace("A#", "a").replace("B#", "b").replace("C#", "c").replace("D#", "d").replace("F#", "f").replace("G#", "g");
     }
 }
