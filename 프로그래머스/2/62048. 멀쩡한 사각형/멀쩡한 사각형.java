@@ -1,11 +1,7 @@
+// 멀쩡한 사각형
 class Solution {
     public long solution(int w, int h) {
-        long answer = 1;
-        int gcd = GCD(w,h);
-        int x = w/gcd;
-        int y = h/gcd;
-        answer = (long)w*h-(x+y-1)*gcd;
-        return answer;
+        return (long)w*h+GCD(w,h)-w-h;
     }
     
     private int GCD(int a, int b){
