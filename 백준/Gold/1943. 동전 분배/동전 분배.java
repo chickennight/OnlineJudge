@@ -7,60 +7,43 @@ public class Main {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
         StringBuilder sb = new StringBuilder();
-        int tc = 3;
         StringTokenizer st;
-        while (tc-- > 0) {
-            int n = Integer.parseInt(in.readLine());
-            Coin[] coins = new Coin[n + 1];
-            boolean[] dp = new boolean[100001];
+        for (int t = 0; t < 3; t++) {
 
-            int total = 0;
-            for (int i = 1; i <= n; ++i) {
+            boolean[] d = new boolean[50001];
+            Deque<int[]> coins = new LinkedList<>();
+            d[0] = true;
+            int sum = 0;
+            int N = Integer.parseInt(in.readLine());
+
+            for (int i = 0; i < N; ++i) {
                 st = new StringTokenizer(in.readLine());
-                int value = Integer.parseInt(st.nextToken());
-                int quantity = Integer.parseInt(st.nextToken());
-                coins[i] = new Coin(value, quantity);
-                total += value * quantity;
-                for (int j = 1; j <= quantity; j++) {
-                    dp[value * j] = true;
+                int coin = Integer.parseInt(st.nextToken());
+                int num = Integer.parseInt(st.nextToken());
+                sum += num * coin;
+                for (int k = coin; k <= num * coin && k <= 50000; k += coin) {
+                    d[k] = true;
                 }
+                coins.offer(new int[]{coin, num, sum});
             }
 
-            if (total % 2 == 1) {
-                sb.append(0).append('\n');
-                continue;
-            } else if (dp[total / 2]) {
-                sb.append(1).append('\n');
-                continue;
-            }
-
-            dp[0] = true;
-            for (int i = 1; i <= n; ++i) {
-                int value = coins[i].value;
-                int quantity = coins[i].quantity;
-
-                for (int j = total / 2; j >= value; --j) {
-                    if (dp[j - value]) {
-                        for (int k = 1; k <= quantity; ++k) {
-                            if (j - value + value * k > total / 2)
-                                break;
-                            dp[j - value + value * k] = true;
+            if (sum % 2 == 1) sb.append(0).append('\n');
+            else if (d[sum / 2]) sb.append(1).append('\n');
+            else {
+                while (!coins.isEmpty()) {
+                    int[] now = coins.poll();
+                    if (now[2] > 50000) now[2] = 50000;
+                    for (int i = 0; i < now[1]; ++i) {
+                        for (int j = now[2]; j > now[0]; --j) {
+                            if ((j - now[0]) % now[0] == 0 && (j - now[0]) <= now[0] * now[1]) continue;
+                            d[j] |= d[j - now[0]];
                         }
                     }
                 }
+                if (sum % 2 == 0 && d[sum / 2]) sb.append(1).append('\n');
+                else sb.append(0).append('\n');
             }
-            sb.append(dp[total / 2] ? 1 : 0).append('\n');
         }
-
         System.out.println(sb);
-    }
-}
-
-class Coin {
-    int value, quantity;
-
-    public Coin(int value, int quantity) {
-        this.value = value;
-        this.quantity = quantity;
     }
 }
