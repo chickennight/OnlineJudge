@@ -19,17 +19,18 @@ public class Main {
                 continue;
             }
 
+            int len = W.length();
             int[] alpha = new int[26];
-            for (int i = 0; i < W.length(); ++i)
+            for (int i = 0; i < len; ++i)
                 alpha[W.charAt(i) - 'a']++;
 
             int min = Integer.MAX_VALUE;
             int max = -1;
-            for (int i = 0; i < W.length(); ++i) {
+            for (int i = 0; i < len; ++i) {
                 if (alpha[W.charAt(i) - 'a'] < k) continue;
 
                 int cnt = 1;
-                for (int l = i + 1; l < W.length(); ++l) {
+                for (int l = i + 1; l < len; ++l) {
                     if (W.charAt(i) == W.charAt(l))
                         ++cnt;
 
