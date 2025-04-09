@@ -24,7 +24,7 @@ public class Main {
 
         int ans = map.firstKey();
 
-        for (int i = K; i < N; i++) {
+        for (int i = K; i < N; ++i) {
             int left = cost[i - K];
             int right = cost[i];
 
