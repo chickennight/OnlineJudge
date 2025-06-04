@@ -57,19 +57,19 @@ public class Main {
         visited[0][0] = true;
 
         while (!pq.isEmpty()) {
-            Node curr = pq.poll();
-            if (curr.x == 500 && curr.y == 500)
-                return curr.cost;
+            Node now = pq.poll();
+            if (now.x == 500 && now.y == 500)
+                return now.cost;
 
             for (int d = 0; d < 4; ++d) {
-                int nx = curr.x + dx[d];
-                int ny = curr.y + dy[d];
+                int nx = now.x + dx[d];
+                int ny = now.y + dy[d];
 
                 if (nx < 0 || ny < 0 || nx >= SIZE || ny >= SIZE) continue;
                 if (visited[nx][ny] || zone[nx][ny] == DEATH) continue;
 
                 visited[nx][ny] = true;
-                pq.offer(new Node(nx, ny, curr.cost + (zone[nx][ny] == DANGER ? 1 : 0)));
+                pq.offer(new Node(nx, ny, now.cost + (zone[nx][ny] == DANGER ? 1 : 0)));
             }
         }
 
